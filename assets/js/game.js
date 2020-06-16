@@ -63,9 +63,12 @@ window.alert(enemyNamesArray [0] + ", " + enemyNamesArray [1] + ", and" + enemyN
 console.log(
     enemyNamesArray.length + " - this is the number of robot names in the array"
     );
+console.log(
+    enemyNamesArray [0] + ", " + enemyNamesArray [1] + ", and" + enemyNamesArray [2] + " have all entered the battlefield!"
+);
 
 
-var enemyHealth = 50;
+var enemyHealth = 20;
 var enemyAttack = 12;
 
 /*
@@ -82,7 +85,9 @@ function fight(){
 //DEFINING THE PARAMETER enemyName HERE WHICH TAKES ON THE VALUE OF THE ARGUMENT enemyNamesArray[i] WHEN WE CALL THE FUNCTION BELOW THIS DECLARATION
 
 var fight = function(enemyName) {
-    window.alert("Welcome to Robot Gladiators!");
+    //repeat and execute as long as the enemy robot is alive
+    while(enemyHealth > 0){//CLOSED BRACKET AT THE BOTTOM BECAUSE WE ARE CONTINUING THE LOOP WHILE enemyHealth IS GREATER THAN ZERO CURRENTLY enemyHealth IS ASSIGNED TO WHICHEVER ENEMY ROBOT COMES FIRST AND IF THAT FIRST ROBOT'S HEALTH REACHES ZERO THEN WHILE enemyHealth OF THE FIRST ROBOT > 0 CONTINUE THROUGH THE STEPS!
+    window.alert("A Challenger approaches!!");
     //after welcome prompt the user to do the fight or skip the battle
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP to choose.");
 
@@ -166,18 +171,24 @@ var fight = function(enemyName) {
     } else {
         window.alert("You need to pick a valid option. Try again!");
         fight();
-    }   
+    }
+    }//CLOSING BRACKET OF THE WHILE STATEMENT   
 };//END VARIABLE EXPRESSION DECLARATION OF THE FUNCTION EXPRESSION CALL fight();
 // PLEASE NOTE end the curly brace with a semicolon when declaring variable expressions!!!!
 
 //NOW SINCE WE DECLARED THE FUNCTION ABOVE THAT HAS THE ARGUMENT INSIDE THE FUNCTION WE WILL FIGHT EACH ROBOT IN A ROW IN THE INCREMENTING ARRAY INDEX NUMBER LOOP UNTIL WE ATTACK THE LAST ROBOT
 for(var i = 0; i < enemyNamesArray.length; i++){
+    
+    //redefining the argument to replace the paramater enemyName above as the incremented enemyNamesArray index value which has incremented by one since going through this function
+    
+    var pickedEnemyName = enemyNamesArray[i];
+    enemyHealth = 20;
+     //can inject a debugger here to debug the entire function step by step
     //passing the argument WHICH REPLACES enemyName which is defined in the function expression above BUT ONLY FOR THE SCOPE OF THE FUNCTION fight(enemyName); ITSELF
     //RIGHT HERE WE ARE PASSING AN ARGUMENT into the function fight(enemyName); with the string values inside enemyNamesArray[i] which is incrementing up in the loop so we fight each robot in a row from index 0 to 1 to 2 and stopping there. 
     //THIS IS TO DEFINE WHAT WE WANT THE VALUE OF THE PARAMETER enemyName TO ACTUALLY BE FOR THE DURATION OF THE FUNCTION
     //REGARDLESS OF WHAT IS INSIDE THE () WHEN DEFINING THE FUNCTION EXPRESSION YOU CAN PASS AN ARGUMENT TO DEFINE WHAT VALUE YOU WANT YOUR PARAMETER TO BE INSIDE THE DEFINED FUNCTION EXPRESSION ABOVE
-
-    fight(enemyNamesArray[i]);
+    fight(pickedEnemyName);
 }
 
 
