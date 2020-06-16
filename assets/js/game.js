@@ -25,6 +25,7 @@
 //      * Fight all enemy robots
 //      * Defeat each enemy robot        
 // "LOSE" - Player robot's health is zero or less
+//      *
 
 
 
@@ -45,7 +46,7 @@ console.log("Our robot's name is " + playerName);
 /*  
 */ 
 var playerName = "Viking" //declare the name without prompting
-var playerHealth = 100;
+var playerHealth = 30;
 var playerAttack = 10;
 
 window.alert(playerName + " enters the battlefield!");//MUST GO BELOW VARIABLE TO DISPLAY THE VALUE, IF NOT DEFINED FIRST WILL GIVE AN ERROR CANT PRINT VALUE
@@ -86,7 +87,7 @@ function fight(){
 
 var fight = function(enemyName) {
     //repeat and execute as long as the enemy robot is alive
-    while(enemyHealth > 0){//CLOSED BRACKET AT THE BOTTOM BECAUSE WE ARE CONTINUING THE LOOP WHILE enemyHealth IS GREATER THAN ZERO CURRENTLY enemyHealth IS ASSIGNED TO WHICHEVER ENEMY ROBOT COMES FIRST AND IF THAT FIRST ROBOT'S HEALTH REACHES ZERO THEN WHILE enemyHealth OF THE FIRST ROBOT > 0 CONTINUE THROUGH THE STEPS!
+    while(playerHealth > 0 && enemyHealth > 0){//CLOSED BRACKET AT THE BOTTOM BECAUSE WE ARE CONTINUING THE LOOP WHILE enemyHealth is > 0 AND && playerHealth > 0
     window.alert("A Challenger approaches!!");
     //after welcome prompt the user to do the fight or skip the battle
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP to choose.");
@@ -109,6 +110,17 @@ var fight = function(enemyName) {
             console.log(//RESULT OF ENEMY DYING
                 enemyName + " has died!"
             );//END CONSOLE LOG OF enemyName has died!
+
+            //award player for defeating the enemy
+            playerMoney = playerMoney + 20;
+            window.alert("You won 20 Rubles as a reward for defeating " + enemyName)
+            console.log(
+                "You won 20 Rubles as a reward for defeating " + enemyName
+            );
+            console.log(
+                "Your total money amount is " + playerMoney
+            );
+            break;//BREAK OUT OF THIS LOOP TO KEEP THE ROBOT FROM ATTACKING WHILE HE IS STILL DEAD
         } else {// OR ELSE PRINT THIS STRING IN THE PROMPT THE ENEMY IS STILL ALIVE SHOW ENEMY HEALTH
             
             window.alert(enemyName + " still has " + enemyHealth + " health left.");
@@ -131,6 +143,7 @@ var fight = function(enemyName) {
             console.log(
                 playerName + " has died!"
             );
+            break;//BREAK OUT OF THIS LOOP TO PREVENT PLAYER FROM ATTACKING STILL AFTER THE PLAYER IS DEAD
         } else {//ELSE WINDOW ALERT THIS STRING SHOW PLAYER HEALTH
             window.alert(playerName + " still has " + playerHealth + " health left.");
             console.log(
@@ -149,7 +162,7 @@ var fight = function(enemyName) {
     } else if (promptFight === "skip" || promptFight === "SKIP") {
         window.alert(playerName + " has chosen to skip the fight!");
         console.log(
-            playerName + " has chosen to skip the fight!"
+            playerName + " has chosen to skip the fight with " + enemyName
         );
         //ASK THE USER TO CONFIRM OR DENY THEIR SKIP CHOICE BOOLEAN TRUE OR FALSE/OK OR CANCEL
         var confirmSkip = window.confirm("Are you sure you'd like to quit?");
@@ -158,19 +171,18 @@ var fight = function(enemyName) {
         if (confirmSkip){
             window.alert(playerName + " has decided to skip this fight. what a noob, " + playerName + " lost money");
             //subtract money from playerMoney variable for skipping
-            playerMoney = playerMoney -2;
+            playerMoney = playerMoney - 2;
             console.log(
                 playerName + " now has " + playerMoney + " Rubles."
             );
-        }
-        //IF NO (false), welcome the player to robot gladiators and then prompt the question again by running fight(); again
-        else {
-            fight();
+            break;//IF YOU SKIP THE FIGHT ON THE LAST ARRAY INDEX VALUE THEN THERE ARE NO MORE ROBOTS TO FIGHT AND EXITS THE FUNCTION
+        } else {//IF NO (false), welcome the player to robot gladiators and then prompt the question again by running fight(); again
+            fight(pickedEnemyName);
         }
     //IF USER TYPES ANYTHING OTHER THAN THE TWO CHOICES WINDOW ALERT THIS MESSAGE!
     } else {
         window.alert("You need to pick a valid option. Try again!");
-        fight();
+        fight(pickedEnemyName);
     }
     }//CLOSING BRACKET OF THE WHILE STATEMENT   
 };//END VARIABLE EXPRESSION DECLARATION OF THE FUNCTION EXPRESSION CALL fight();
