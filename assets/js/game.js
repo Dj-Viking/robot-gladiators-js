@@ -89,6 +89,10 @@ var fight = function(enemyName) {
     //repeat and execute as long as the enemy robot is alive
     while(playerHealth > 0 && enemyHealth > 0){//CLOSED BRACKET AT THE BOTTOM BECAUSE WE ARE CONTINUING THE LOOP WHILE enemyHealth is > 0 AND && playerHealth > 0
     window.alert("A Challenger approaches!!");
+    window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ));
+    console.log(
+        playerName + " has reached round " + ( i + 1 )
+    ); 
     //after welcome prompt the user to do the fight or skip the battle
     var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP to choose.");
 
@@ -143,6 +147,10 @@ var fight = function(enemyName) {
             console.log(
                 playerName + " has died!"
             );
+            window.alert(playerName + "! You have lost your robot in battle! Game over!");
+            console.log(
+                playerName + " has lost the game!!"
+            );
             break;//BREAK OUT OF THIS LOOP TO PREVENT PLAYER FROM ATTACKING STILL AFTER THE PLAYER IS DEAD
         } else {//ELSE WINDOW ALERT THIS STRING SHOW PLAYER HEALTH
             window.alert(playerName + " still has " + playerHealth + " health left.");
@@ -156,7 +164,7 @@ var fight = function(enemyName) {
         if (playerHealth > 0) {
             console.log(
                 "Your player is still alive!"
-            ); 
+            );
         }
     //IF USER TYPES SKIP AT THE BEGINNING FIGHT OR SKIP PROMPT WINDOW SCREEN PRINT PLAYER HAS CHOSEN TO SKIP THE FIGHT
     } else if (promptFight === "skip" || promptFight === "SKIP") {
@@ -192,10 +200,11 @@ var fight = function(enemyName) {
 for(var i = 0; i < enemyNamesArray.length; i++){
     
     //redefining the argument to replace the paramater enemyName above as the incremented enemyNamesArray index value which has incremented by one since going through this function
-    
+    //essentially moving to the next fight with the robot next in line in the array
     var pickedEnemyName = enemyNamesArray[i];
-    enemyHealth = 20;
-     //can inject a debugger here to debug the entire function step by step
+    enemyHealth = 20;//have to redeclare what I said their healths were at the top with the global variables
+    //can inject a debugger here to debug the entire function step by step
+    //debugger;
     //passing the argument WHICH REPLACES enemyName which is defined in the function expression above BUT ONLY FOR THE SCOPE OF THE FUNCTION fight(enemyName); ITSELF
     //RIGHT HERE WE ARE PASSING AN ARGUMENT into the function fight(enemyName); with the string values inside enemyNamesArray[i] which is incrementing up in the loop so we fight each robot in a row from index 0 to 1 to 2 and stopping there. 
     //THIS IS TO DEFINE WHAT WE WANT THE VALUE OF THE PARAMETER enemyName TO ACTUALLY BE FOR THE DURATION OF THE FUNCTION
