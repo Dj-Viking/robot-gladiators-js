@@ -30,7 +30,7 @@
 window.alert("This is an alert! JavaScript is running!");
 
 
-    
+
 
 var playerName = "Viking" //declare the name without prompting
 var playerHealth = 100;
@@ -89,8 +89,11 @@ var fight = function() {
 //end the curly brace with a semicolon when declaring variables!!!!
         
 fight();
-        
+
+        //check to see if the value of the playerHealth variable is greater than 0
         if (playerHealth > 0) {
+            //print to console this string message!
             console.log("Your player is still alive!"); 
         }
-        //check to see if the value of the playerHealth variable is greater than 0
+
+var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT or 'SKIP to choose.");
