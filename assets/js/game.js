@@ -22,14 +22,16 @@
 
 
 
+//prompting input from user to enter a string for the variable playerName
+/*var playerName = window.prompt("what is your robot's name?");*/
 //print to the console the string of characters in the quotation marks
 //console.log("Our robot's name is " + playerName);
 
 window.alert("This is an alert! JavaScript is running!");
 
 
+    
 
-//var playerName = window.prompt("what is your robot's name?");
 var playerName = "Viking" //declare the name without prompting
 var playerHealth = 100;
 var playerAttack = 10;
