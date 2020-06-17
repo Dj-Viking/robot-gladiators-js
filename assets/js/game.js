@@ -2,7 +2,21 @@
 // "WIN" - Player robot has defeated all the enemy robots
 //      * Fight all enemy robots
 //      * Defeat each enemy robot
-// "LOSE" - Player robot's health is zero or less
+// "LOSE" - Player robot's health is zero or less | the game ends and all activity stops
+
+//endGame()
+//  * alert player's total stats
+//  * asks the player if they want to play again
+//  * if yes call startGame() to restart the game
+// - After skipping or defeating an enemy while theres more robots to fight still
+//      * ask player if they want to "shop"
+//      * if no continue as normal
+//      * if yes call the shop() function
+//      * in shop(), ask player if they want to refill health, upgrade attack, or leave the shop
+//      * if refill, subtract money points from the player and increase health
+//      * if upgrade, subtract money points from the play and increase power
+//      * if leave, alert goodbye and exit the function
+//      * if any other invalid option, call shop() again
 
 
 window.alert("warning javascript is running!");
@@ -96,24 +110,27 @@ var fight = function(enemyName) {
 //         playerName + " has joined the battlefield!"        
 //     );
 // }//dont need semicolon at the end of declaring a function
-
-for(var i = 0; i < enemyNamesArray.length; i++){
-    if(playerHealth > 0){
-        //let user know what round they are in 
-        window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
-        console.log(
-            "Welcome to Robot Gladiators! Round " + ( i + 1 ) 
-        );
-        //pick new enemy to fight based on the index number of the enemyNames array
-        var pickedEnemyName = enemyNamesArray[i];
-        //reset enemyHealth before starting new fight
-        enemyHealth = 50;
-        //use debugger to pause the script from running and check what's going on at that moment in the code
-        //debugger;
-        //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
-        fight(pickedEnemyName);
-    } else {
-        window.alert("You have lost your robot in battle! Game Over!");
-        break;
+var startGame = function(){
+    for(var i = 0; i < enemyNamesArray.length; i++){
+        if(playerHealth > 0){
+            //let user know what round they are in 
+            window.alert("Welcome to Robot Gladiators! Round " + ( i + 1 ) );
+            console.log(
+                "Welcome to Robot Gladiators! Round " + ( i + 1 ) 
+            );
+            //pick new enemy to fight based on the index number of the enemyNames array
+            var pickedEnemyName = enemyNamesArray[i];
+            //reset enemyHealth before starting new fight
+            enemyHealth = 50;
+            //use debugger to pause the script from running and check what's going on at that moment in the code
+            //debugger;
+            //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
+            fight(pickedEnemyName);
+        } else {
+            window.alert("You have lost your robot in battle! Game Over!");
+            break;
+        }
     }
-}   
+    //play again
+    //startGame(); //when placed here calling a function inside its own function call causes an infinite loop
+}
