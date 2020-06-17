@@ -30,7 +30,7 @@
 
 
 
-
+//this is going to run before anything!!!
 window.alert("This is an alert! JavaScript is running!");
 
 
