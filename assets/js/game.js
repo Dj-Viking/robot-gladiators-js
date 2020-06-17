@@ -190,6 +190,14 @@ var startGame = function(){
             //debugger;
             //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
             fight(pickedEnemyName);
+
+            //if we're not at the last enemy in the array
+            //ensures that shop() is called after every fight
+            //but only if the loop iterator, i, still has room to increment
+            // if i < the last index number in the array...basically
+            if (i < enemyNamesArray.length - 1) {
+                shop();
+            }
         } else {
             window.alert("You have lost your robot in battle! Game Over!");
             break;
@@ -231,3 +239,55 @@ var endGame = function(){
         );
     }
 };//after the else statement there is no more instruction so the function ends and the game stops
+
+var shop = function(){
+    console.log(playerName + " entered the shop");
+    // ask the player what they would like to do
+    var shopOptionPrompt = window.prompt(
+        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'refill or REFILL', 'upgrade or UPGRADE', or 'leave or LEAVE' to make a choice."
+    );
+    switch (shopOptionPrompt) {
+        case "refill":
+        case "REFILL"://new case same result
+            if (playerMoney >= 7) {
+                window.alert("Refilling player's health by 20 for 7 Rubles.");
+                // increase health and decrease money
+                playerHealth = playerHealth + 20;
+                playerMoney = playerMoney - 7;
+                console.log(playerName + "'s health is now: " + playerHealth);
+                console.log(playerName + " has left the shop.")
+            } else {
+                window.alert("You don't have enough money!");
+                console.log("You don't have enough money!");
+                console.log(playerName + " has left the shop.")
+            }
+            break;
+        case "upgrade":
+        case "UPGRADE"://new case same result
+            if ( playerMoney >= 7){
+                window.alert("Upgrading player's attack by 6 for 7 Rubles.");
+                // increase attack and decrease money
+                playerAttack = playerAttack + 6;
+                playerMoney = playerMoney -7;
+                console.log(playerName + "'s attack increased to: " + playerAttack)
+                console.log(playerName + " has left the shop.")
+            } else {
+                window.alert("You don't have enough money!");
+                console.log("You don't have enough money!");
+                console.log(playerName + " has left the shop.")
+            }
+            break;
+        case "leave":
+        case "LEAVE"://new case same result
+            window.alert("Leaving the shop.");
+            console.log(playerName + " has left the shop.")
+            //do nothing here so function ends
+            break;
+    default:
+        window.alert("You did not pick a valid option. Try again.");
+        console.log("You did not pick a valid option. Try again.");
+        //call shop() again to force player to pick a valid option
+        shop();
+        break;
+    }
+}
