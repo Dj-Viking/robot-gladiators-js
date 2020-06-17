@@ -1,8 +1,13 @@
 //Game States
+// startGame()
 // "WIN" - Player robot has defeated all the enemy robots
 //      * Fight all enemy robots
 //      * Defeat each enemy robot
 // "LOSE" - Player robot's health is zero or less | the game ends and all activity stops
+
+//fight()
+//  * make a fight sequence that loops through each robot until
+//  player dies or robot dies
 
 //endGame()
 //  * alert player's total stats
@@ -17,18 +22,28 @@
 //      * if upgrade, subtract money points from the play and increase power
 //      * if leave, alert goodbye and exit the function
 //      * if any other invalid option, call shop() again
+//
+//randomnumber()
+//  * create function to generate random numbers for health and attacks
+//  of the players and enemies
+
 
 //caution! javascript started!
 window.alert("Остарожно!! Джава-скрипт начался!");
 
+//THESE GLOBAL VARIABLES CAN CHANGE WHEN DECLARED AGAIN INSIDE A FUNCTION
+//declaring global variables for player name, health, and attack
 var playerName = "Viking";
 var playerHealth = 50;
 var playerAttack = 40;
 var playerMoney = 10;
 
+//declaring global variables for enemy names health and attack
 var enemyNamesArray = ["Roborto", "Amy Android", "Robo Trumble"];
 var enemyHealth = 13;
 var enemyAttack = 12;
+
+
 
 
 var fight = function(enemyName) {
@@ -38,9 +53,16 @@ var fight = function(enemyName) {
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
         //IF USER TYPES fight OR FIGHT in the promptFight
         if(promptFight === "fight" || promptFight === "FIGHT"){
-                //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-            enemyHealth = enemyHealth - playerAttack;//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH
+            console.log(enemyName + " has approached the battle!");
+            console.log(enemyName + "'s stats:");
+            console.log("Attack: " + enemyAttack);
+            console.log("Health: " + enemyHealth);
+            //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
+            //creating variable for player damage to be random against the enemy
+            var damage = randomNumber(playerAttack -3, playerAttack);
+            enemyHealth = Math.max(0, enemyHealth - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
             // Log a resulting message to the console so we know that it worked.
+            console.log(playerName + " dealt " + damage + " damage!")
             console.log(
                 playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
             );
@@ -53,16 +75,18 @@ var fight = function(enemyName) {
                 );
                 playerMoney = playerMoney + 10;
                 console.log("Viking has won money from winning the battle and now has: " + playerMoney + " Rubles.");
-                break;//ENEMY HAS DIED BREAK OUT OF THE FUNCTION CALL
+                break;//ENEMY HAS DIED BREAK OUT OF THE IF ELSE STATEMENT
             } else {
                 window.alert(enemyName + " still has " + enemyHealth + " health left.");
                 console.log(
                     enemyName + " still has " + enemyHealth + " health left."
                 );
             }
-
-            playerHealth = playerHealth - enemyAttack;//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH
+            //ENEMY ATTACK
+            var damage = randomNumber(enemyAttack -3, enemyAttack);
+            playerHealth = Math.max(0, playerHealth - damage);//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH NO NEGATIVE NUMBERS
             //Log the enemy attacking the player
+            console.log(enemyName + " dealt " + damage + " damage!")
             console.log(
                 enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
             );
@@ -72,7 +96,7 @@ var fight = function(enemyName) {
                 console.log(
                     playerName + " has died!"
                 );
-                break;//PLAYER IS DEAD BREAK OUT OF THE FUNCTION CALL
+                break;//PLAYER IS DEAD BREAK OUT OF THE IF ELSE STATEMENT
             } else {
                 window.alert(playerName + " still has " + playerHealth + " health left.");
                 console.log(
@@ -90,7 +114,7 @@ var fight = function(enemyName) {
                 console.log(
                     playerName + " has chosen to skip the fight"
                 );
-                playerMoney = playerMoney - 10;
+                playerMoney = Math.max(0, playerMoney - 10); //MONEY NEVER GOES NEGATIVE IN THIS CASE
                 console.log("Viking has lost money from skipping battle and now has: " + playerMoney + " Rubles.");
                 break;
             //if no (confirmSkip = false), ask question again by running fight() again
@@ -164,7 +188,7 @@ var fight = function(enemyName) {
 //     console.log(
 //         playerName + " has joined the battlefield!"        
 //     );
-// }//dont need semicolon at the end of declaring a function
+// }//dont need semicolon at the end of a function declaration will need for function expressions though!!!
 
 var startGame = function(){
     playerHealth = 100;
@@ -184,8 +208,8 @@ var startGame = function(){
             );
             //pick new enemy to fight based on the index number of the enemyNames array
             var pickedEnemyName = enemyNamesArray[i];
-            //reset enemyHealth before starting new fight
-            enemyHealth = 50;
+            //reset enemyHealth to a random number between 0 and 59.xx before starting new fight
+            enemyHealth = randomNumber(40, 60);
             //use debugger to pause the script from running and check what's going on at that moment in the code
             //debugger;
             //pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
@@ -205,6 +229,7 @@ var startGame = function(){
     }
     //play again
     //startGame(); //when placed here calling a function inside its own function call causes an infinite loop
+    //after all the robots are dead or your die, enter endGame() function
     endGame();//this enters the endGame sequence to choose if you want to play again or quit playing
 };
 
@@ -291,3 +316,11 @@ var shop = function(){
         break;
     }
 }
+
+//create function to execute to generate a number
+//assigning parameters to the function min, and max
+var randomNumber = function (min, max){
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
+    return value;
+};
+
