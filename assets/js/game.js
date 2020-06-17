@@ -18,8 +18,8 @@
 //      * if leave, alert goodbye and exit the function
 //      * if any other invalid option, call shop() again
 
-
-window.alert("warning javascript is running!");
+//caution! javascript started!
+window.alert("Остарожно!! Джава-скрипт начался!");
 
 var playerName = "Viking";
 var playerHealth = 50;
@@ -36,73 +36,128 @@ var fight = function(enemyName) {
     while(enemyHealth > 0 && playerHealth > 0){
         //ASK USER IF THEY WANT TO FIGHT OR SKIP
         var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-            //IF USER TYPES fight OR FIGHT in the promptFight
-            if(promptFight === "fight" || promptFight === "FIGHT"){
-                    //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
-                enemyHealth = enemyHealth - playerAttack;//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH
-                // Log a resulting message to the console so we know that it worked.
+        //IF USER TYPES fight OR FIGHT in the promptFight
+        if(promptFight === "fight" || promptFight === "FIGHT"){
+                //Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable
+            enemyHealth = enemyHealth - playerAttack;//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH
+            // Log a resulting message to the console so we know that it worked.
+            console.log(
+                playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+            );
+    
+            //CHECK ENEMY HEALTH
+            if(enemyHealth <= 0) {
+                window.alert(enemyName + " has died!");
                 console.log(
-                    playerName + " attacked " + enemyName + ". " + enemyName + " now has " + enemyHealth + " health remaining."
+                    enemyName + " has died!"
                 );
-        
-                //CHECK ENEMY HEALTH
-                if(enemyHealth <= 0) {
-                    window.alert(enemyName + " has died!");
-                    console.log(
-                        enemyName + " has died!"
-                    );
-                    break;//ENEMY HAS DIED BREAK OUT OF THE FUNCTION CALL
-                } else {
-                    window.alert(enemyName + " still has " + enemyHealth + " health left.");
-                    console.log(
-                        enemyName + " still has " + enemyHealth + " health left."
-                    );
-                }
-
-                playerHealth = playerHealth - enemyAttack;//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH
-                //Log the enemy attacking the player
+                playerMoney = playerMoney + 10;
+                console.log("Viking has won money from winning the battle and now has: " + playerMoney + " Rubles.");
+                break;//ENEMY HAS DIED BREAK OUT OF THE FUNCTION CALL
+            } else {
+                window.alert(enemyName + " still has " + enemyHealth + " health left.");
                 console.log(
-                    enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+                    enemyName + " still has " + enemyHealth + " health left."
                 );
-                //CHECK playerHealth
-                if(playerHealth <= 0) {
-                    window.alert(playerName + " has died!");
-                    console.log(
-                        playerName + " has died!"
-                    );
-                    break;//PLAYER IS DEAD BREAK OUT OF THE FUNCTION CALL
-                } else {
-                    window.alert(playerName + " still has " + playerHealth + " health left.");
-                    console.log(
-                        playerName + " still has " + playerHealth + " health left."
-                    );
-                }
-            //IF USER TYPES skip OR SKIP in the promptFight 
-            } else if (promptFight === "skip" || promptFight === "SKIP") {
-                //confirm that the user wants to skip
-                var confirmSkip = window.confirm("Are you sure you'd like to quit?");
-
-                //if yes (confirmSkip = true), leave fight
-                if (confirmSkip) {
-                    window.alert(playerName + " has chosen to skip the fight!");
-                    console.log(
-                        playerName + " has chosen to skip the fight"
-                    );
-                    playerMoney = playerMoney - 10;
-                    console.log(
-                        "Viking has lost money from skipping battle and now has: " + playerMoney + " Rubles."
-                    );
-                    break;
-                //if no (confirmSkip = false), ask question again by running fight() again
-                } else {
-                    fight();
-                }
-            } else {//IF ANYTHING ELSE IS TYPED IN THE promptFight BESIDES fight OR skip
-                window.alert("You need to pick a valid option. Try again!");
             }
+
+            playerHealth = playerHealth - enemyAttack;//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH
+            //Log the enemy attacking the player
+            console.log(
+                enemyName + " attacked " + playerName + ". " + playerName + " now has " + playerHealth + " health remaining."
+            );
+            //CHECK playerHealth
+            if(playerHealth <= 0) {
+                window.alert(playerName + " has died!");
+                console.log(
+                    playerName + " has died!"
+                );
+                break;//PLAYER IS DEAD BREAK OUT OF THE FUNCTION CALL
+            } else {
+                window.alert(playerName + " still has " + playerHealth + " health left.");
+                console.log(
+                    playerName + " still has " + playerHealth + " health left."
+                );
+            }
+        //IF USER TYPES skip OR SKIP in the promptFight 
+        } else if (promptFight === "skip" || promptFight === "SKIP") {
+            //confirm that the user wants to skip
+            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+            //if yes (confirmSkip = true), leave fight
+            if (confirmSkip) {
+                window.alert(playerName + " has chosen to skip the fight!");
+                console.log(
+                    playerName + " has chosen to skip the fight"
+                );
+                playerMoney = playerMoney - 10;
+                console.log("Viking has lost money from skipping battle and now has: " + playerMoney + " Rubles.");
+                break;
+            //if no (confirmSkip = false), ask question again by running fight() again
+            } else {
+                fight();
+            }
+        } else {//IF ANYTHING ELSE IS TYPED IN THE promptFight BESIDES fight OR skip
+            window.alert("You need to pick a valid option. Try again!");
+        }
     }//END OF WHILE LOOP ENEMY'S HEALTH IS NOT GREATER THAN ZERO
 };
 
+// var fight = function(enemyName) {
+//     while (playerHealth > 0 && enemyHealth > 0) {
+//       // ask user if they'd liked to fight or run
+//       var promptFight = window.prompt('Would you like FIGHT or SKIP this battle? Enter "FIGHT" or "SKIP" to choose.');
+  
+//       // if user picks "skip" confirm and then stop the loop
+//       if (promptFight === "skip" || promptFight === "SKIP") {
+//         // confirm user wants to skip
+//         var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+  
+//         // if yes (true), leave fight
+//         if (confirmSkip) {
+//           window.alert(playerName + ' has decided to skip this fight. Goodbye!');
+//           // subtract money from playerMoney for skipping
+//           playerMoney = playerMoney - 10;
+//           console.log("playerMoney", playerMoney)
+//           break;
+//         }
+//       }
+  
+//       // remove enemy's health by subtracting the amount set in the playerAttack variable
+//       enemyHealth = enemyHealth - playerAttack;
+//       console.log(
+//         playerName + ' attacked ' + enemyName + '. ' + enemyName + ' now has ' + enemyHealth + ' health remaining.'
+//       );
+  
+//       // check enemy's health
+//       if (enemyHealth <= 0) {
+//         window.alert(enemyName + ' has died!');
+  
+//         // award player money for winning
+//         playerMoney = playerMoney + 20;
+  
+//         // leave while() loop since enemy is dead
+//         break;
+//       } else {
+//         window.alert(enemyName + ' still has ' + enemyHealth + ' health left.');
+//       }
+  
+//       // remove players's health by subtracting the amount set in the enemyAttack variable
+//       playerHealth = playerHealth - enemyAttack;
+//       console.log(
+//         enemyName + ' attacked ' + playerName + '. ' + playerName + ' now has ' + playerHealth + ' health remaining.'
+//       );
+  
+//       // check player's health
+//       if (playerHealth <= 0) {
+//         window.alert(playerName + ' has died!');
+//         // leave while() loop if player is dead
+//         break;
+//       } else {
+//         window.alert(playerName + ' still has ' + playerHealth + ' health left.');
+//       }
+//     }
+//   };
 
 // function fight() {
 //     window.alert("The fight has begun!");
@@ -110,10 +165,16 @@ var fight = function(enemyName) {
 //         playerName + " has joined the battlefield!"        
 //     );
 // }//dont need semicolon at the end of declaring a function
+
 var startGame = function(){
     playerHealth = 100;
     playerAttack = 40;
     playerMoney = 10;
+    console.log(playerName + " has entered the battlefield!");
+    console.log(playerName + "'s current stats: ");
+    console.log("Attack: " + playerAttack);
+    console.log("Health: " + playerHealth);
+    console.log("Money: " + playerMoney);
     for(var i = 0; i < enemyNamesArray.length; i++){
         if(playerHealth > 0){
             //let user know what round they are in 
@@ -136,4 +197,37 @@ var startGame = function(){
     }
     //play again
     //startGame(); //when placed here calling a function inside its own function call causes an infinite loop
-}
+    endGame();//this enters the endGame sequence to choose if you want to play again or quit playing
+};
+
+var endGame = function(){
+    window.alert("The game has ended. Let's see how you did!")
+    console.log(
+        "The game has ended. Let's see how you did!"
+        );
+    //if player is still alive, player wins!
+    if (playerHealth > 0) {
+        window.alert("Great job, you've survived the game! You have won a total of " + playerMoney + " Rubles.");
+        console.log("Great job, you've survived the game! Here are your final character stats!");
+        console.log(playerName + "'s current stats: ");
+        console.log("Attack: " + playerAttack);
+        console.log("Health: " + playerHealth);
+        console.log("Money: " + playerMoney);
+    } else {
+        window.alert("You've lost your robot in battle!");
+        console.log(
+            "You've lost your robot in battle!"
+        );
+    }
+    var playAgainConfirm = window.confirm("Would you like to play again?");
+    //if user confirms yes OK playAgainConfirm = true
+    if (playAgainConfirm) {
+        //restart game
+        startGame();
+    } else {
+        window.alert("Thank you for playing Robot Gladiators! Come back soon!");
+        console.log(
+            "Thank you for playing Robot Gladiators! Come back soon!"
+        );
+    }
+};//after the else statement there is no more instruction so the function ends and the game stops
