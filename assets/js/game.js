@@ -111,6 +111,9 @@ var fight = function(enemyName) {
 //     );
 // }//dont need semicolon at the end of declaring a function
 var startGame = function(){
+    playerHealth = 100;
+    playerAttack = 40;
+    playerMoney = 10;
     for(var i = 0; i < enemyNamesArray.length; i++){
         if(playerHealth > 0){
             //let user know what round they are in 
