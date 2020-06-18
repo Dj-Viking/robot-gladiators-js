@@ -4,7 +4,7 @@
 //      * Fight all enemy robots
 //      * Defeat each enemy robot
 // "LOSE" - Player robot's health is zero or less | the game ends and all activity stops
-
+//
 //fight()
 //  * make a fight sequence that loops through each robot until
 //  player dies or robot dies
@@ -51,10 +51,10 @@ var playerInfo =
             this.health +=20;
             this.money -= 7;
             console.log(this.name + "'s health is now: " + this.health);
-            console.log(this.name + " has left the shop.")
+            console.log(this.name + " has left the shop.");
         } else {
             window.alert("You don't have enough money!");
-            console.log(this.name + " has left the shop.")
+            console.log(this.name + " has left the shop.");
         }
     },// comma here please
     upgradeAttack: function(){
