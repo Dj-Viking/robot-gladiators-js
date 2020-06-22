@@ -36,8 +36,35 @@ var getPlayerName = function(){
     var name = "";
     while (name === "" || name === null) {
         name = prompt("What is your robot's name?");
+        console.log("Your robot's name is: " + name);
     }
     return name;
+}
+
+//function for handling the fight or skip prompt
+var fightOrSkip = function(){
+    //ask user if they'd like to fight or skip using this function
+    var promptFight = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose.");
+    //conditional recursive function call here!
+    if (promptfight === "" || promptFight === null){
+        window.alert("You need to provide a valid answer! Plese try again.");
+        //returns the function call of its own function call so that the function starts all over again.
+        return fightOrSkip();
+    }
+
+    //if user picks "skip" confirm and then stop the loop
+    if (promptFight === "skip" || promptFight === "SKIP"){
+        //confirm the user wants to skip
+        var confirmSkip = window.confirm("Are you sure you want to skip this fight?");
+
+        //if yes (true), leave battle
+        if (confirmSkip){
+            window.alert(playerInfo.name + "has decided to skip this fight!");
+            //subtract money from playerMoney for skipping
+            playerInfo.money = playerInfo.money - 10;
+            shop();
+        }
+    }
 }
 
 //THESE GLOBAL VARIABLES CAN CHANGE WHEN DECLARED AGAIN INSIDE A FUNCTION
@@ -115,7 +142,7 @@ var enemyInfo =
 
 
 //argument (pickedEnemyObj) is passed into this parameter (enemy) insie the for loop when calling fight(pickedEnemyObj)
-var fight = function(enemy) {
+var fight = function(enemy, i) {
     //repeat and execute as long as the enemy robot is alive AND if the player robot is alive
     while(enemy.health > 0 && playerInfo.health > 0){
         //ASK USER IF THEY WANT TO FIGHT OR SKIP
@@ -123,9 +150,8 @@ var fight = function(enemy) {
         //IF USER TYPES fight OR FIGHT in the promptFight
         if(promptFight === "fight" || promptFight === "FIGHT"){
             console.log(enemy.name + " has approached the battle!");
-            console.log(enemy.name + "'s stats:");
-            console.log("Attack: " + enemy.attack);
-            console.log("Health: " + enemy.health);
+            //display the enemyInfo object info in this case our argument matches the array of objects we created above. and not the startgame function below.
+            console.log(enemyInfo[i]);
             //Subtract the value of `playerInfo.attack` from the value of `enemy.health` and use that result to update the value in the `enemy.health` variable
             //creating variable for player damage to be random against the enemy
             var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
@@ -205,9 +231,7 @@ var startGame = function(){
     // playerInfo.attack = 40;
     console.log(playerInfo.name + " has entered the battlefield!");
     console.log(playerInfo.name + "'s current stats: ");
-    console.log("Attack: " + playerInfo.attack);
-    console.log("Health: " + playerInfo.health);
-    console.log("Money: " + playerInfo.money);
+    console.log(playerInfo);
 
     for(var i = 0; i < enemyInfo.length; i++){
         if(playerInfo.health > 0){
@@ -223,7 +247,8 @@ var startGame = function(){
             //use debugger to pause the script from running and check what's going on at that moment in the code
             //debugger;
             //pass the pickedEnemyObj variable's value into the fight function, where it will assume the value of the enemy parameter
-            fight(pickedEnemyObj);
+            //passing the i as the parameter to refer back to the enemy's object info in the console
+            fight(pickedEnemyObj, i);
 
             //if we're not at the last enemy in the array
             //ensures that shop() is called after every fight
