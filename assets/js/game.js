@@ -126,7 +126,7 @@ var enemyInfo =
         // shield: {
         //     type: "wood",
         //     strength: 10
-        // }//MAYBE IN THE FUTURE enemyInfo.shield.type: "string" | enemyInfo.shield.strength: number etc.
+        // }//MAYBE IN THE FUTURE enemyInfo.shield.type: "string" | enemyInfo.shield.strength: integer etc.
     },
     {
         name: "Desann",
