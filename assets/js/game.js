@@ -29,7 +29,7 @@
 
 
 //caution! javascript started!
-window.alert("Welcome to Robot Gladiators! A console based text RPG- to begin: open the browser console and type startGame(); and press enter!");
+window.alert("Welcome to Robot Gladiators! A console based text RPG- to begin: open the browser console and type startGame(); then press enter!");
 //function for getting player name and return the value of the function as the value stored in the variable name
 //loops while there is a blank name or a null return from the prompt
 var getPlayerName = function(){
