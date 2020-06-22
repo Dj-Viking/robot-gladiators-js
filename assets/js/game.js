@@ -36,8 +36,41 @@ var getPlayerName = function(){
     var name = "";
     while (name === "" || name === null) {
         name = prompt("What is your robot's name?");
+        console.log("Your robot's name is: " + name);
     }
     return name;
+}
+
+//function for handling the fight or skip prompt issue of the nothing input or null input
+var fightOrSkip = function(){
+    //ask user if they'd like to fight or skip using this function
+    var promptFightOrSkip = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose.");
+    //conditional recursive function call here!
+    if (promptFightOrSkip === "" || promptFightOrSkip === null){
+        window.alert("You need to provide a valid answer! Please try again.");
+        //returns the function call of its own function call so that the function starts all over again.
+        //ask the question again!!!!
+        return fightOrSkip();//return the function call as the value of the function call to call the function again
+    }
+    //if user picks "fight" confirm the fight then continue the block of code in the 
+    //fight() function that handles all the fight messages and the calculations
+    if(promptFightOrSkip === "fight" || promptFightOrSkip === "FIGHT"){
+        //RIGHT NOW IF SOMEONE TYPES ANYTHING EXCEPT A BLANK OR NULL IT FIGHTS YOU COULD TYPE HOLY BOB SAGET AND IT WILL CONTINUE FIGHTING
+        //continue on the block of code in fight() 
+    }
+    //if user picks "skip" confirm and then stop the loop and proceed with confirm skip
+    if (promptFightOrSkip === "skip" || promptFightOrSkip === "SKIP"){
+        //confirm the user wants to skip
+        var confirmSkip = window.confirm("Are you sure you want to skip this fight?");
+        //if yes (true), leave battle
+        if (confirmSkip){//is true
+            window.alert(playerInfo.name + "has decided to skip this fight!");
+            //subtract money from playerMoney for skipping
+            playerInfo.money = playerInfo.money - 10;
+            console.log("Viking has lost money from skipping battle and now has: " + playerInfo.money + " Rubles.");
+            shop();
+        }
+    }
 }
 
 //THESE GLOBAL VARIABLES CAN CHANGE WHEN DECLARED AGAIN INSIDE A FUNCTION
@@ -46,13 +79,10 @@ var getPlayerName = function(){
 var playerInfo = 
 {
     name: getPlayerName(),
-    health: 100,
-    attack: 10,
-    money: 10,
     reset: function(){
         this.health = 100;
         this.money = 10;
-        this.attack = 40;
+        this.attack = 10;
     },//COMMA!!!!!!!!!!!!!
     refillHealth: function(){
         if (this.money >= 7){
@@ -91,7 +121,7 @@ var randomNumber = function (min, max){
 var enemyInfo = 
 [
     {
-        name: "Roborto",
+        name: "Darth Zannah",
         attack: randomNumber(10,14),
         // shield: {
         //     type: "wood",
@@ -99,11 +129,11 @@ var enemyInfo =
         // }//MAYBE IN THE FUTURE enemyInfo.shield.type: "string" | enemyInfo.shield.strength: number etc.
     },
     {
-        name: "Amy Android",
+        name: "Desann",
         attack: randomNumber(10, 14)
     },
     {
-        name: "Robo Trumble",
+        name: "<TNT>Viking-M",
         attack: randomNumber(10, 14)
     }
 ];
@@ -114,86 +144,132 @@ var enemyInfo =
 
 
 
-//argument (pickedEnemyObj) is passed into this parameter (enemy) insie the for loop when calling fight(pickedEnemyObj)
-var fight = function(enemy) {
-    //repeat and execute as long as the enemy robot is alive AND if the player robot is alive
+//argument (pickedEnemyObj) is passed into this parameter (enemy) inside the for loop when calling fight(pickedEnemyObj)
+var fight = function(enemy, i) {//passing i into here to display stats of current enemy
+    
     while(enemy.health > 0 && playerInfo.health > 0){
-        //ASK USER IF THEY WANT TO FIGHT OR SKIP
-        var promptFight = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
-        //IF USER TYPES fight OR FIGHT in the promptFight
-        if(promptFight === "fight" || promptFight === "FIGHT"){
+    //initializing player turn variable for the upcoming conditional statement
+    var isPlayerTurn = true;
+    //if math.random() spits out a number less than 0.9 then it is not the players turn 
+    //RIGHT NOW IT DOESN'T MATTER....THE FIGHT SEQUENCE NEEDS TO BE SPLIT UP TO MATCH THE CONDITIONAL STATEMENT. 
+    //AS IT STANDS PLAYER ALWAYS GOES FIRST!!!
+    console.log(Math.random());
+    var turn = Math.random();
+    console.log(turn + " turn random value calculated");
+    if(turn < 0.5){//if turn value is less than 0.9 its not player turn
+        isPlayerTurn = false;
+        console.log("ENEMY TURN!!!")
+        //ENEMY FIGHT CODE HERE
+        //ENEMY ATTACK
+        console.log("It's the enemies' turn!!!!")
+        var damage = randomNumber(enemy.attack -3, enemy.attack);
+        playerInfo.health = Math.max(0, playerInfo.health - damage);//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH NO NEGATIVE NUMBERS
+        //Log the enemy attacking the player
+        console.log(enemy.name + " dealt " + damage + " damage!")
+        console.log(
+            enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+        );
+        console.log(playerInfo);
+        //CHECK playerInfo.health
+        if(playerInfo.health <= 0) {
+            window.alert(playerInfo.name + " has died!");
+            console.log(
+                playerInfo.name + " has died!"
+            );
+            break;//PLAYER IS DEAD BREAK OUT OF THE WHILE LOOP
+        } else {
+            window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            console.log(playerInfo);
+        }
+    }//no need for else...it is assumed that if math.random < 0.5 then isPlayerTurn will keep the same stored value: true
+    //repeat and execute as long as the enemy robot is alive AND if the player robot is alive
+        if (isPlayerTurn){//player turn is true ask if they want to skip..
+            console.log("its the player's turn!!! choose fight or skip!!!")
+            //ask user if they want to fight or skip using fight or skip....okay theres no fight conditional inside our function....sooooo did i miss something??????
+            if(fightOrSkip()){//this is a nested if conditional statement so its not calling this function until ITS MY TURN to fight (THE ENEMY COULD HAVE ATTACKED ALREADY) which is currently only handling the empty and null inputs and also the skip option to go into the shop...which i dont get why calling shop wayyy up there makes shop work if shop is declared AT THE BOTTOM!!!!!!!!!!!!WHAT!!!!!!
+                
+                break;//if true TO SKIP, leave fight by breaking out of the while loop GO TO THE NEXT ROBOT OR IF ITS THE LAST ROBOT THE GAME ENDS
+            }//no else here
+        //PLAYER ATTACKS CODE HERE
+        //PLAYER ATTACK
+        //console.log("its the player's turn!!!")
+        var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
+        enemy.health = Math.max(0, enemy.health - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
+        // Log a resulting message to the console so we know that it worked.
+        console.log(playerInfo.name + " dealt " + damage + " damage!")
+        console.log("Enemy Stats: ");
+        console.log(enemyInfo[i]);
+
+        //CHECK ENEMY HEALTH
+        if(enemy.health <= 0) {
+            window.alert(enemy.name + " has died!");
+            console.log(
+                enemy.name + " has died!"
+            );
+            playerInfo.money = playerInfo.money + 10;
+            console.log("Viking has won money from winning the battle and now has: " + playerInfo.money + " Rubles.");
+            break;//ENEMY HAS DIED BREAK OUT OF THE IF ELSE STATEMENT
+        } else {
+            window.alert(enemy.name + " still has " + enemy.health + " health left.");
+        }    
+        }
+        //ASK USER IF THEY WANT TO FIGHT OR SKIP//trying to figure out something here.
+        //var promptFightOrSkip = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
+        //IF USER TYPES fight OR FIGHT in the promptFightOrSkip
+        //if(promptFightOrSkip === "fight" || promptFightOrSkip === "FIGHT"){
             console.log(enemy.name + " has approached the battle!");
-            console.log(enemy.name + "'s stats:");
-            console.log("Attack: " + enemy.attack);
-            console.log("Health: " + enemy.health);
+            //display the enemyInfo object info in this case our argument matches the array of objects we created above. and not the startgame function below.
+            console.log("Enemy Stats: ");
+            console.log(enemyInfo[i]);
             //Subtract the value of `playerInfo.attack` from the value of `enemy.health` and use that result to update the value in the `enemy.health` variable
             //creating variable for player damage to be random against the enemy
-            var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
-            enemy.health = Math.max(0, enemy.health - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
-            // Log a resulting message to the console so we know that it worked.
-            console.log(playerInfo.name + " dealt " + damage + " damage!")
-            console.log(
-                playerInfo.name + " attacked " + enemy.name + ". " + enemy.name + " now has " + enemy.health + " health remaining."
-            );
+            // //PLAYER ATTACK
+            // console.log("its the player's turn!!!")
+            // var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
+            // enemy.health = Math.max(0, enemy.health - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
+            // // Log a resulting message to the console so we know that it worked.
+            // console.log(playerInfo.name + " dealt " + damage + " damage!")
+            // console.log("Enemy Stats: ");
+            // console.log(enemyInfo[i]);
     
-            //CHECK ENEMY HEALTH
-            if(enemy.health <= 0) {
-                window.alert(enemy.name + " has died!");
-                console.log(
-                    enemy.name + " has died!"
-                );
-                playerInfo.money = playerInfo.money + 10;
-                console.log("Viking has won money from winning the battle and now has: " + playerInfo.money + " Rubles.");
-                break;//ENEMY HAS DIED BREAK OUT OF THE IF ELSE STATEMENT
-            } else {
-                window.alert(enemy.name + " still has " + enemy.health + " health left.");
-                console.log(
-                    enemy.name + " still has " + enemy.health + " health left."
-                );
-            }
-            //ENEMY ATTACK
-            var damage = randomNumber(enemy.attack -3, enemy.attack);
-            playerInfo.health = Math.max(0, playerInfo.health - damage);//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH NO NEGATIVE NUMBERS
-            //Log the enemy attacking the player
-            console.log(enemy.name + " dealt " + damage + " damage!")
-            console.log(
-                enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
-            );
-            //CHECK playerInfo.health
-            if(playerInfo.health <= 0) {
-                window.alert(playerInfo.name + " has died!");
-                console.log(
-                    playerInfo.name + " has died!"
-                );
-                break;//PLAYER IS DEAD BREAK OUT OF THE IF ELSE STATEMENT
-            } else {
-                window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-                console.log(
-                    playerInfo.name + " still has " + playerInfo.health + " health left."
-                );
-            }
-        //IF USER TYPES skip OR SKIP in the promptFight 
-        } else if (promptFight === "skip" || promptFight === "SKIP") {
-            //confirm that the user wants to skip
-            var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+            // //CHECK ENEMY HEALTH
+            // if(enemy.health <= 0) {
+            //     window.alert(enemy.name + " has died!");
+            //     console.log(
+            //         enemy.name + " has died!"
+            //     );
+            //     playerInfo.money = playerInfo.money + 10;
+            //     console.log("Viking has won money from winning the battle and now has: " + playerInfo.money + " Rubles.");
+            //     break;//ENEMY HAS DIED BREAK OUT OF THE IF ELSE STATEMENT
+            // } else {
+            //     window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            // }
+            // //ENEMY ATTACK
+            // console.log("It's the enemies' turn!!!!")
+            // var damage = randomNumber(enemy.attack -3, enemy.attack);
+            // playerInfo.health = Math.max(0, playerInfo.health - damage);//CALCULATE ENEMY ATTACK AGAINST PLAYER HEALTH NO NEGATIVE NUMBERS
+            // //Log the enemy attacking the player
+            // console.log(enemy.name + " dealt " + damage + " damage!")
+            // console.log(
+            //     enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
+            // );
+            // console.log(playerInfo);
+            // //CHECK playerInfo.health
+            // if(playerInfo.health <= 0) {
+            //     window.alert(playerInfo.name + " has died!");
+            //     console.log(
+            //         playerInfo.name + " has died!"
+            //     );
+            //     break;//PLAYER IS DEAD BREAK OUT OF THE WHILE LOOP
+            // } else {
+            //     window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
+            //     console.log(playerInfo);
+            // }
+            //kept the old skip code here moved it down
+            //Switch turn order for next round
+            isPlayerTurn = !isPlayerTurn;///doesn't really work...trying something out at the moment.
+    }//END OF WHILE LOOP ENEMY'S HEALTH OR PLAYER HEALTH IS NOT GREATER THAN ZERO
 
-            //if yes (confirmSkip = true), leave fight
-            if (confirmSkip) {
-                window.alert(playerInfo.name + " has chosen to skip the fight!");
-                console.log(
-                    playerInfo.name + " has chosen to skip the fight"
-                );
-                playerInfo.money = Math.max(0, playerInfo.money - 10); //MONEY NEVER GOES NEGATIVE IN THIS CASE
-                console.log("Viking has lost money from skipping battle and now has: " + playerInfo.money + " Rubles.");
-                break;
-            //if no (confirmSkip = false), ask question again by running fight() again
-            } else {
-                fight();
-            }
-        } else {//IF ANYTHING ELSE IS TYPED IN THE promptFight BESIDES fight OR skip
-            window.alert("You need to pick a valid option. Try again!");
-        }
-    }//END OF WHILE LOOP ENEMY'S HEALTH IS NOT GREATER THAN ZERO
 };
 
 
@@ -205,9 +281,7 @@ var startGame = function(){
     // playerInfo.attack = 40;
     console.log(playerInfo.name + " has entered the battlefield!");
     console.log(playerInfo.name + "'s current stats: ");
-    console.log("Attack: " + playerInfo.attack);
-    console.log("Health: " + playerInfo.health);
-    console.log("Money: " + playerInfo.money);
+    console.log(playerInfo);
 
     for(var i = 0; i < enemyInfo.length; i++){
         if(playerInfo.health > 0){
@@ -223,7 +297,8 @@ var startGame = function(){
             //use debugger to pause the script from running and check what's going on at that moment in the code
             //debugger;
             //pass the pickedEnemyObj variable's value into the fight function, where it will assume the value of the enemy parameter
-            fight(pickedEnemyObj);
+            //passing the i as the parameter to refer back to the enemy's object info in the console
+            fight(pickedEnemyObj, i);
 
             //if we're not at the last enemy in the array
             //ensures that shop() is called after every fight
@@ -279,19 +354,17 @@ var shop = function(){
     console.log(playerInfo.name + " entered the shop");
     // ask the player what they would like to do
     var shopOptionPrompt = window.prompt(
-        "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'refill or REFILL', 'upgrade or UPGRADE', or 'leave or LEAVE' to make a choice."
+        playerInfo.name + " has entered the Shop\nWould you like to:\n1: to refill health\n2: to upgrade\n3: to leave\nAfter your choice press ENTER or click OK."
     );
+    shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt) {
-        case "refill":
-        case "REFILL"://new case same result
+        case 1 :
             playerInfo.refillHealth();
             break;
-        case "upgrade":
-        case "UPGRADE"://new case same result
+        case 2 :
             playerInfo.upgradeAttack();
             break;
-        case "leave":
-        case "LEAVE"://new case same result
+        case 3 :
             window.alert("Leaving the shop.");
             console.log(playerInfo.name + " has left the shop.")
             //do nothing here so function ends
@@ -309,3 +382,26 @@ var shop = function(){
 //assigning parameters to the randomNumber() function - min, and max
 
 
+
+//keeping this here just in case
+//IF USER TYPES skip OR SKIP in the promptFightOrSkip 
+        // } else if (promptFightOrSkip === "skip" || promptFightOrSkip === "SKIP") {
+        //     //confirm that the user wants to skip
+        //     var confirmSkip = window.confirm("Are you sure you'd like to quit?");
+
+        //     //if yes (confirmSkip = true), leave fight
+        //     if (confirmSkip) {
+        //         window.alert(playerInfo.name + " has chosen to skip the fight!");
+        //         console.log(
+        //             playerInfo.name + " has chosen to skip the fight"
+        //         );
+        //         playerInfo.money = Math.max(0, playerInfo.money - 10); //MONEY NEVER GOES NEGATIVE IN THIS CASE
+        //         console.log("Viking has lost money from skipping battle and now has: " + playerInfo.money + " Rubles.");
+        //         break;//BREAK OUT OF THE WHILE LOOP
+        //     //if no (confirmSkip = false), ask question again by running fight() again
+        //     } else {
+        //         fight();
+        //     }
+        // } else {//IF ANYTHING ELSE IS TYPED IN THE promptFightOrSkip BESIDES fight OR skip
+        //     window.alert("You need to pick a valid option. Try again!");
+        // }
