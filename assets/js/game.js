@@ -29,14 +29,23 @@
 
 
 //caution! javascript started!
-window.alert("Остарожно!! Джава-скрипт начался!");
+window.alert("Welcome to Robot Gladiators! A console based text RPG- to begin: open the browser console and type startGame(); and press enter!");
+//function for getting player name and return the value of the function as the value stored in the variable name
+//loops while there is a blank name or a null return from the prompt
+var getPlayerName = function(){
+    var name = "";
+    while (name === "" || name === null) {
+        name = prompt("What is your robot's name?");
+    }
+    return name;
+}
 
 //THESE GLOBAL VARIABLES CAN CHANGE WHEN DECLARED AGAIN INSIDE A FUNCTION
 //declaring global variables for player name, health, and attack
 //CREATING AS OBJECTS IN NEW VARIABLE playerInfo
 var playerInfo = 
 {
-    name: "Viking",
+    name: getPlayerName(),
     health: 100,
     attack: 10,
     money: 10,
