@@ -150,13 +150,11 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
     while(enemy.health > 0 && playerInfo.health > 0){
     //initializing player turn variable for the upcoming conditional statement
     var isPlayerTurn = true;
-    //if math.random() spits out a number less than 0.9 then it is not the players turn 
-    //RIGHT NOW IT DOESN'T MATTER....THE FIGHT SEQUENCE NEEDS TO BE SPLIT UP TO MATCH THE CONDITIONAL STATEMENT. 
-    //AS IT STANDS PLAYER ALWAYS GOES FIRST!!!
+    //THE FIGHT SEQUENCE NEEDS TO BE SPLIT UP TO MATCH THE CONDITIONAL STATEMENT. 
     console.log(Math.random());
     var turn = Math.random();
     console.log(turn + " turn random value calculated");
-    if(turn < 0.5){//if turn value is less than 0.9 its not player turn
+    if(turn < 0.5){//if turn value is less than 0.5 its not player turn
         isPlayerTurn = false;
         console.log("ENEMY TURN!!!")
         //ENEMY FIGHT CODE HERE
@@ -304,7 +302,7 @@ var startGame = function(){
             //ensures that shop() is called after every fight
             //but only if the loop iterator, i, still has room to increment
             // if i < the last index number in the array...basically
-            if (i < enemyInfo.length - 1) {
+            if (i < enemyInfo.length - 1 && playerInfo.health > 0) {//fixed this part, the player was going into the store if he died. since we added the randomizer LOL
                 shop();
             }
         } else {
