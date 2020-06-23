@@ -297,7 +297,7 @@ var startGame = function(){
             //pass the pickedEnemyObj variable's value into the fight function, where it will assume the value of the enemy parameter
             //passing the i as the parameter to refer back to the enemy's object info in the console
             fight(pickedEnemyObj, i);
-
+            //AFTER THE FIGHT ENDS THE WHILE LOOP IS EXITED AND CODE WILL CONTINUE BELOW THIS LINE
             //if we're not at the last enemy in the array
             //ensures that shop() is called after every fight
             //but only if the loop iterator, i, still has room to increment
