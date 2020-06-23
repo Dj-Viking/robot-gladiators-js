@@ -167,7 +167,7 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
         console.log(
             enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
         );
-        console.log(playerInfo + playerInfo.attack);
+        console.log(playerInfo);
         //CHECK playerInfo.health
         if(playerInfo.health <= 0) {
             window.alert(playerInfo.name + " has died!");
@@ -177,7 +177,7 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
             break;//PLAYER IS DEAD BREAK OUT OF THE WHILE LOOP
         } else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-            console.log(playerInfo + "\n Player Attack: " + playerInfo.attack);
+            console.log(playerInfo);
         }
     }//no need for else...it is assumed that if math.random < 0.5 then isPlayerTurn will keep the same stored value: true
     //repeat and execute as long as the enemy robot is alive AND if the player robot is alive
@@ -302,7 +302,7 @@ var startGame = function(){
             //ensures that shop() is called after every fight
             //but only if the loop iterator, i, still has room to increment
             // if i < the last index number in the array...basically
-            if (i < enemyInfo.length - 1 && playerInfo.health > 0) {//fixed this part, the player was going into the store if he died. since we added the randomizer LOL
+            if (i < enemyInfo.length - 2 && playerInfo.health > 0) {//fixed this part, the player was going into the store if he died. since we added the randomizer LOL
                 shop();
             }
         } else {
