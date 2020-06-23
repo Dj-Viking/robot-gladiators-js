@@ -44,7 +44,7 @@ var getPlayerName = function(){
 //function for handling the fight or skip prompt issue of the nothing input or null input
 var fightOrSkip = function(){
     //ask user if they'd like to fight or skip using this function
-    var promptFightOrSkip = window.prompt ("Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose.");
+    var promptFightOrSkip = window.prompt ("ITS YOUR TURN!!! Would you like to FIGHT or SKIP this battle? Enter FIGHT or SKIP to choose.");
     //conditional recursive function call here!
     if (promptFightOrSkip === "" || promptFightOrSkip === null){
         window.alert("You need to provide a valid answer! Please try again.");
@@ -169,7 +169,7 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
         console.log(
             enemy.name + " attacked " + playerInfo.name + ". " + playerInfo.name + " now has " + playerInfo.health + " health remaining."
         );
-        console.log(playerInfo);
+        console.log(playerInfo + playerInfo.attack);
         //CHECK playerInfo.health
         if(playerInfo.health <= 0) {
             window.alert(playerInfo.name + " has died!");
@@ -179,7 +179,7 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
             break;//PLAYER IS DEAD BREAK OUT OF THE WHILE LOOP
         } else {
             window.alert(playerInfo.name + " still has " + playerInfo.health + " health left.");
-            console.log(playerInfo);
+            console.log(playerInfo + "\n Player Attack: " + playerInfo.attack);
         }
     }//no need for else...it is assumed that if math.random < 0.5 then isPlayerTurn will keep the same stored value: true
     //repeat and execute as long as the enemy robot is alive AND if the player robot is alive
@@ -190,18 +190,18 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
                 
                 break;//if true TO SKIP, leave fight by breaking out of the while loop GO TO THE NEXT ROBOT OR IF ITS THE LAST ROBOT THE GAME ENDS
             }//no else here
-        //PLAYER ATTACKS CODE HERE
-        //PLAYER ATTACK
-        //console.log("its the player's turn!!!")
-        var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
-        enemy.health = Math.max(0, enemy.health - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
-        // Log a resulting message to the console so we know that it worked.
-        console.log(playerInfo.name + " dealt " + damage + " damage!")
-        console.log("Enemy Stats: ");
-        console.log(enemyInfo[i]);
+            //PLAYER ATTACKS CODE HERE
+            //PLAYER ATTACK
+            //console.log("its the player's turn!!!")
+            var damage = randomNumber(playerInfo.attack -3, playerInfo.attack);
+            enemy.health = Math.max(0, enemy.health - damage);//CALCULATE THE PLAYER ATTACK AGAINST ENEMY HEALTH this will prevent negative health number values from appearing
+            // Log a resulting message to the console so we know that it worked.
+            console.log(playerInfo.name + " dealt " + damage + " damage!")
+            console.log("Enemy Stats: ");
+            console.log(enemyInfo[i]);
 
-        //CHECK ENEMY HEALTH
-        if(enemy.health <= 0) {
+            //CHECK ENEMY HEALTH
+            if(enemy.health <= 0) {
             window.alert(enemy.name + " has died!");
             console.log(
                 enemy.name + " has died!"
@@ -209,9 +209,9 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
             playerInfo.money = playerInfo.money + 10;
             console.log("Viking has won money from winning the battle and now has: " + playerInfo.money + " Rubles.");
             break;//ENEMY HAS DIED BREAK OUT OF THE IF ELSE STATEMENT
-        } else {
-            window.alert(enemy.name + " still has " + enemy.health + " health left.");
-        }    
+            } else {
+                window.alert(enemy.name + " still has " + enemy.health + " health left.");
+            }    
         }
         //ASK USER IF THEY WANT TO FIGHT OR SKIP//trying to figure out something here.
         //var promptFightOrSkip = window.prompt("Would you like to FIGHT or SKIP this battle? Enter 'FIGHT' or 'SKIP' to choose.");
@@ -267,7 +267,7 @@ var fight = function(enemy, i) {//passing i into here to display stats of curren
             // }
             //kept the old skip code here moved it down
             //Switch turn order for next round
-            isPlayerTurn = !isPlayerTurn;///doesn't really work...trying something out at the moment.
+            isPlayerTurn = !isPlayerTurn;///doesn't really work...trying something out at the moment. yep i randomized the turns....not sure if this line does anything.
     }//END OF WHILE LOOP ENEMY'S HEALTH OR PLAYER HEALTH IS NOT GREATER THAN ZERO
 
 };
@@ -323,6 +323,25 @@ var endGame = function(){
     console.log(
         "The game has ended. Let's see how you did!"
         );
+        //check local storage for high score, if it's not there use 0
+        var highScore = localStorage.getItem("High Score");
+        if(highScore === null){
+            highScore = 0;
+        }
+        //compare the player robot score with current high score
+        //if player score is higher, set new high score (my game contains Rubles as score)
+        if (playerInfo.money > highScore){
+            // *set new high score object into localStorage
+            localStorage.setItem("High Score", playerInfo.money);
+            // *set new player robot's name object into local storage
+            localStorage.setItem("name", playerInfo.name);
+
+            // send player the message that they beat the high score.
+            window.alert(playerInfo.name + " you beat the high score! and now have the score of " + playerInfo.money);
+        } else {
+            //iff current stored score is higher, send message player did not beat high score
+            window.alert(playerInfo.name + " did not beat the high score of " + highScore);
+        }
     //if player is still alive, player wins!
     if (playerInfo.health > 0) {
         window.alert("Great job, you've survived the game! You have won a total of " + playerInfo.money + " Rubles.");
@@ -331,6 +350,7 @@ var endGame = function(){
         console.log("Attack: " + playerInfo.attack);
         console.log("Health: " + playerInfo.health);
         console.log("Money: " + playerInfo.money);
+        console.log(playerInfo);
     } else {
         window.alert("You've lost your robot in battle!");
         console.log(
