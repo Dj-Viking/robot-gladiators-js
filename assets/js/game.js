@@ -254,7 +254,7 @@ var startGame = function(){
             //but only if the loop iterator, i, still has room to increment
             // if i < the last index number in the array...basically
             if (i < /*2*/ enemyInfo.length - 1 && playerInfo.health > 0) {//fixed this part, the player was going into the store if he died. since we added the randomizer LOL
-                shop();//set to enemyInfo.length - 3 so that if i skip the first robot i dont go into the shop twice in a row
+                shop();//set to enemyInfo.length - 1 so that the cycle is functioning logically in case later the amount of enemy robots changes, I dont need to change this line at all. this will always iterate the way i want it.
             }
         } else {
             window.alert("You have lost your robot in battle! Game Over!");
