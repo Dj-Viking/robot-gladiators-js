@@ -37,6 +37,7 @@ var getPlayerName = function(){
     while (name === "" || name === null) {
         name = prompt("What is your robot's name?");
         console.log("Your robot's name is: " + name);
+        console.log("To start playing type startGame(); into the console and hit ENTER")
     }
     return name;
 }
@@ -323,7 +324,7 @@ var shop = function(){
     console.log(playerInfo.name + " entered the shop");
     // ask the player what they would like to do
     var shopOptionPrompt = window.prompt(
-        playerInfo.name + " has entered the Shop\nWould you like to:\n1: to refill health\n2: to upgrade\n3: to leave\nAfter your choice press ENTER or click OK."
+        playerInfo.name + " has entered the Shop\nWould you like to:\n1: to refill health\n2: to upgrade your attack\n3: to leave the shop\nAfter your choice press ENTER or click OK."
     );
     shopOptionPrompt = parseInt(shopOptionPrompt);
     switch (shopOptionPrompt) {
